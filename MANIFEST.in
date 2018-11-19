@@ -1,0 +1,6 @@
+include README.rst
+include build/*.R
+include build/*.ado
+include versioneer.py
+include autowrap.cfg
+include db_covariate/_version.py
