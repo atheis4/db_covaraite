@@ -5,7 +5,7 @@ db_covariate
 - Description: A deployable version of the 2019 GBD covariate database.
 
 **ABOUT**
-
+===============================================================================
 db_covariate represents the first of the Global Burden of Disease databases to be turned into a deployable python package.
 
 This will allow any test suites that rely on querying or updating data from this database to divorce itself from IHME infrastructure.
@@ -16,7 +16,7 @@ A similar version of the Shared Database must be created first so that the forei
 
 
 **USE**
-
+===============================================================================
 Please check the tests/conftest.py module for an example of creating the database.
 
 You must have docker, mysql, and the proprietary cluster_utils installed on your local machine in order to create the containerized database.
