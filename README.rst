@@ -4,7 +4,8 @@ db_covariate
 - Email: atheis@uw.edu
 - Description: A deployable version of the 2019 GBD covariate database.
 
-*ABOUT*
+**ABOUT**
+
 db_covariate represents the first of the Global Burden of Disease databases to be turned into a deployable python package.
 
 This will allow any test suites that rely on querying or updating data from this database to divorce itself from IHME infrastructure.
