@@ -4,7 +4,7 @@ db_covariate
 - Email: atheis@uw.edu
 - Description: A deployable version of the 2019 GBD covariate database.
 
-**ABOUT**
+**about**
 ===============================================================================
 db_covariate represents the first of the Global Burden of Disease databases to be turned into a deployable python package.
 
@@ -15,7 +15,7 @@ The database is created using an internal mock database called EphemerDB. Develo
 A similar version of the Shared Database must be created first so that the foreign keys to the covariate database are not violated.
 
 
-**USE**
+**use**
 ===============================================================================
 Please check the tests/conftest.py module for an example of creating the database.
 
