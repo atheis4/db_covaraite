@@ -14,4 +14,9 @@ The database is created using an internal mock database called EphemerDB. Develo
 
 A similar version of the Shared Database must be created first so that the foreign keys to the covariate database are not violated.
 
-The make_schema module contains the CovariateDB object that must be instantiated with the host, user, password of the mysql Docker database.
+
+**USE**
+
+Please check the tests/conftest.py module for an example of creating the database.
+
+You must have docker, mysql, and the proprietary cluster_utils installed on your local machine in order to create the containerized database.
