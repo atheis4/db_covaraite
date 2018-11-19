@@ -6,6 +6,7 @@ import sys
 from db_tools import config
 
 
+this_path = os.path.dirname(os.path.abspath(__file__))
 this_dir = os.path.dirname(__file__)
 
 
@@ -23,6 +24,31 @@ class CovariateDB(object):
         self.user = user
         self.password = password
         self.root_conn_str = root_conn_str
+
+        # The following lines are necessary for exposing the newly created
+        # database to our pattern of database access through
+        # db_tools.ezfuncs.get_session which returns a sqlalchemy.orm.Session
+        # object.
+        params = re.match('.*://(.*):(.*)@(.*):(.*)/(.*)',
+                          root_conn_str)
+
+        new_conn_def = {
+            'covariates': {
+                'host': params.group(3),
+                'port': params.group(4),
+                'user_name': params.group(1),
+                'password': params.group(2),
+                'default_schema': params.group(5),
+                'pool_recycle': 360
+            }
+        }
+
+        cfg = config.DBConfig(
+            load_base_defs=True,
+            base_filepath=os.path.join(this_path, '.odbc.ini')
+        )
+
+        cfg.add_conn_defs(new_conn_def)
 
     def execute_sql_script(self, sql_script):
         cmd = ('mysql -h {host} -P {port} --user={user} --password={password} '
@@ -42,24 +68,3 @@ class CovariateDB(object):
         for table in self.tables:
             table_sql_script = os.path.join(this_dir, 'building_blocks', table)
             self.execute_sql_script(table_sql_script)
-
-    def add_conn_def(self, conn_def_name):
-        """Adds a connection definition to the database for ease of querying
-        with db_tools."""
-        params = re.match(".*://(.*):(.*)@(.*):(.*)/(.*)",
-                          self.root_conn_str)
-        new_conn_defs = {
-            conn_def_name: {
-                "host": params.group(3),
-                "port": params.group(4),
-                "user_name": params.group(1),
-                "password": params.group(2),
-                "default_schema": params.group(5),
-                "pool_recycle": 360
-            }
-        }
-        if sys.version[0] == '3':
-            config.DBConfig._update_single_conn_def(new_conn_defs)
-        elif sys.version[0] == '2':
-            config.DBConfig._update_single_conn_def(
-                (list(new_conn_defs.values())[0], conn_def_name))
